@@ -29,7 +29,40 @@ java -jar /opt/ili2pg-4.3.1/ili2pg-4.3.1.jar --dbhost localhost --dbdatabase oer
 xmllint --format ch.so.agi.zustaendigestellen.oereb2.xtf -o ch.so.agi.zustaendigestellen.oereb2.xtf
 ```
 
-Upload:
+## Konfiguration ("Annex-Modell"): Gemeinden mit ÖREB
+Schema anlegen:
 ```
-https://s3.eu-central-1.amazonaws.com/ch.so.agi.zustaendigestellen.oereb2/ch.so.agi.zustaendigestellen.oereb2.xtf
+ java -jar /opt/ili2pg-4.3.1/ili2pg-4.3.1.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr admin --dbpwd admin --nameByTopic --defaultSrsCode 2056 --modeldir "../oereb2-db/models/;http://models.geo.admin.ch" --models OeREBKRMkvs_V2_0 --dbschema oereb_konfiguration --schemaimport
+```
+
+Daten manuell erfassen.
+
+Export:
+```
+java -jar /opt/ili2pg-4.3.1/ili2pg-4.3.1.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr admin --dbpwd admin --modeldir "../oereb2-db/models/;http://models.geo.admin.ch" --models OeREBKRMkvs_V2_0 --dbschema oereb_konfiguration --export ch.so.agi.gemeinden.oereb2.xtf
+
+xmllint --format ch.so.agi.gemeinden.oereb2.xtf -o ch.so.agi.gemeinden.oereb2.xtf
+```
+
+```
+java -jar /Users/stefan/apps/ilivalidator-1.11.6/ilivalidator-1.11.6.jar --modeldir "http://models.geo.admin.ch;https://raw.githubusercontent.com/oereb/oereb2-ilirepo/master/" ch.so.agi.gemeinden.oereb2.xtf
+```
+
+## Konfiguration ("Annex-Modell"): Logos und MapLayering
+Schema anlegen:
+```
+java -jar /opt/ili2pg-4.3.1/ili2pg-4.3.1.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr admin --dbpwd admin --nameByTopic --defaultSrsCode 2056 --modeldir "../oereb2-db/models/;http://models.geo.admin.ch" --models OeREBKRMkvs_V2_0 --dbschema oereb_konfiguration_logo --schemaimport
+```
+
+Daten manuell erfassen.
+
+Export:
+```
+java -jar /opt/ili2pg-4.3.1/ili2pg-4.3.1.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr admin --dbpwd admin --modeldir "../oereb2-db/models/;http://models.geo.admin.ch" --models OeREBKRMkvs_V2_0 --dbschema oereb_konfiguration_logo --export ch.so.agi.konfiguration.oereb2.xtf
+
+xmllint --format ch.so.agi.konfiguration.oereb2.xtf -o ch.so.agi.konfiguration.oereb2.xtf
+```
+
+```
+java -jar /Users/stefan/apps/ilivalidator-1.11.6/ilivalidator-1.11.6.jar --modeldir "http://models.geo.admin.ch;https://raw.githubusercontent.com/oereb/oereb2-ilirepo/master/" ch.so.agi.konfiguration.oereb2.xtf
 ```
